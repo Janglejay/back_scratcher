@@ -6,7 +6,9 @@ import com.janglejay.enums.MockerTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 
@@ -16,15 +18,14 @@ public class MockerResolver implements Resolver {
     @Override
     public MockerDeconstruction resolve(String line) {
         log.info("resolver running ......");
-        String[] sides = line.split("=");
-        String left = sides[0];
-        String[] strings = left.split(" ");
-        List<String> stringList = new ArrayList<>();
-        for (String s : strings) {
-            if (!s.trim().equals("")) {
-                stringList.add(s.trim());
-            }
-        }
+//        String[] sides = line.split("=");
+//        String left = sides[0];
+//        String[] strings = left.split(" ");
+
+        List<String> stringList = Arrays.stream(line.split(" ")).filter(
+                x -> !x.trim().equals("")
+        ).collect(Collectors.toList());
+
         if (stringList.isEmpty()) {
             log.info("stringList is Empty .......");
         }

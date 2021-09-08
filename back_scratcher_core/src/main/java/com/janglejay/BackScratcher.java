@@ -26,6 +26,7 @@ public class BackScratcher {
             String choose = in.nextLine();
             List<String> ret = null;
             Resolver resolver;
+            //mock
             if (choose.trim().equals(String.valueOf(1))) {
                 log.info("your choose is mock ......");
                 String string = in.nextLine();
@@ -33,6 +34,7 @@ public class BackScratcher {
                 MockerDeconstruction mockerDeconstruction = (MockerDeconstruction) resolver.resolve(string);
                 ret = MockerHandler.doMocker(mockerDeconstruction);
             }
+            //doReturn
             if (choose.trim().equals(String.valueOf(2))) {
                 log.info("your choose is doReturn ......");
                 String string = in.nextLine();

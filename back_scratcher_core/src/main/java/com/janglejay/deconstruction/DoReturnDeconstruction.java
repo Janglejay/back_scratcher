@@ -3,14 +3,16 @@ package com.janglejay.deconstruction;
 
 import com.janglejay.enums.ReturnValueTypeEnum;
 import com.janglejay.enums.MethodTypeEnum;
+import lombok.Data;
 
+@Data
 public class DoReturnDeconstruction extends Deconstruction{
     private final MethodTypeEnum methodType;
     private final ReturnValueTypeEnum returnValueType;
     private final String className;
     private final String methodName;
     private final String returnValue;
-    private final String args;
+    private final Integer argsNumber;
 
     private DoReturnDeconstruction(Builder builder) {
         this.methodType = builder.methodType;
@@ -18,7 +20,7 @@ public class DoReturnDeconstruction extends Deconstruction{
         this.className = builder.className;
         this.methodName = builder.methodName;
         this.returnValue = builder.returnValue;
-        this.args = builder.args;
+        this.argsNumber = builder.argsNumber;
     }
 
     public static class Builder {
@@ -27,13 +29,27 @@ public class DoReturnDeconstruction extends Deconstruction{
         private String className;
         private String methodName;
         private String returnValue;
-        private String args;
+        private Integer argsNumber;
+
+        public Builder() {
+
+        }
 
         public Builder(MethodTypeEnum methodType, ReturnValueTypeEnum returnValueType) {
             this.methodType = methodType;
             this.returnValueType = returnValueType;
         }
 
+
+        public Builder setMethodType(MethodTypeEnum methodType) {
+            this.methodType = methodType;
+            return this;
+        }
+
+        public Builder setReturnValueType(ReturnValueTypeEnum returnValueType) {
+            this.returnValueType = returnValueType;
+            return this;
+        }
 
         public Builder setClassName(String className) {
             this.className = className;
@@ -46,18 +62,52 @@ public class DoReturnDeconstruction extends Deconstruction{
         }
 
         public Builder setReturnValue(String returnValue) {
-            this.returnValueType = returnValueType;
+            this.returnValue = returnValue;
             return this;
         }
 
-        public Builder setArgs(String args) {
-            this.args = args;
+        public Builder setArgs(Integer argsNumber) {
+            this.argsNumber = argsNumber;
+            return this;
+        }
+
+
+        public Builder buildRight(String right) {
+            //不能把参数里面的 . 分割
+            int dotIndex = right.indexOf(".");
+            String rl = right.substring(0, dotIndex);
+            String rr = right.substring(dotIndex + 1);
+            String className = rl;
+            int leftBracketIndex = rr.indexOf("(");
+            int rightBracketIndex = rr.lastIndexOf(")");
+            String methodName = rr.substring(0, leftBracketIndex);
+            String[] args = rr.substring(leftBracketIndex + 1, rightBracketIndex).split(",");
+            int argsNumber = args.length;
+            this.setClassName(className)
+                    .setMethodName(methodName)
+                    .setArgs(argsNumber);
+
+            if (Character.isUpperCase(rl.charAt(0))) {
+                //Static
+//        CatMonitorUtils.addExeWithSubType(CatEventEnum.CLAIM_COMPANY_MODIFY_MATERIAL, ClaimAttrConstants.REPORT_CAT_SUCCESS + "");
+//        doNothing().when(CatMonitorUtils.class, "addExeWithSubType", any(), any());
+                this.setMethodType(MethodTypeEnum.STATIC);
+            }
+
+            if (Character.isLowerCase(rl.charAt(0))) {
+                //Normal or Final
+//        claimCheckService.checkOrderOwner(orderId, orderDetailId, userInfo);
+//        doNothing().when(claimCheckService).checkOrderOwner(anyLong(), anyLong(), any());
+                this.setMethodType(MethodTypeEnum.NORMAL);
+            }
             return this;
         }
 
         public DoReturnDeconstruction build() {
             return new DoReturnDeconstruction(this);
         }
+
+
 
     }
 
