@@ -32,6 +32,7 @@ public class BackScratcherDoReturn {
                 ret = DoReturnHandler.doReturn(doReturnDeconstruction);
             }catch (Exception e) {
                 log.error("{}", e);
+                continue;
             }
             out.println();
             if (ret != null) {

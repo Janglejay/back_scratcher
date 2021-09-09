@@ -5,6 +5,10 @@ import java.awt.datatransfer.StringSelection;
 
 public class Main {
     public static void main(String[] args) {
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection("我马上就要去剪切板了"), null);
+        String ss = "1";
+        System.out.println(ss);
+    }
+    private static void changeSS(String ss) {
+        ss = "xxx";
     }
 }

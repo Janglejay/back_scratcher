@@ -1,14 +1,16 @@
 package com.janglejay.handler;
 
-import com.google.common.base.CaseFormat;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
+import com.janglejay.utils.BasicTypeTable;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 
 @Slf4j
 public class MockerHandler {
@@ -24,10 +26,11 @@ public class MockerHandler {
         }
 
         if (mockerTypeEnum.equals(MockerTypeEnum.GENERICS)) {
-            return Arrays.asList(mockGenerics(mockerDeconstruction));
+            return mockGenerics(mockerDeconstruction);
         }
+
         if (mockerTypeEnum.equals(MockerTypeEnum.NORMAL)) {
-            return Arrays.asList(mockNormal(mockerDeconstruction));
+            return Collections.singletonList(mockNormal(mockerDeconstruction));
         }
         return null;
     }
@@ -37,23 +40,48 @@ public class MockerHandler {
         return className + " " + valName + " = " + "mock(" + classType + ".class);";
     }
 
+    private static String build(Pair<String, String> basicType, String valName) {
+        return basicType.getKey() + " " + valName + " = " + basicType.getValue() + ");";
+    }
+
+    private static Pair<String, String> filterBasicType(String className) {
+        if (BasicTypeTable.TYPE_TABLE.containsKey(className)) {
+            Pair<String, String> pair = new ImmutablePair<>(className, BasicTypeTable.TYPE_TABLE.get(className));
+        }
+        return null;
+    }
+
     private static String mockNormal(MockerDeconstruction mockerDeconstruction) {
         //mock 普通的
         //QueryBankTypeParam queryBankParam
         //QueryBankTypeParam queryBankParam = mock(QueryBankTypeParam.class);
         String className = mockerDeconstruction.getClassName();
+        Pair<String, String> pair = filterBasicType(className);
         String valName = mockerDeconstruction.getValName();
+        if (pair != null) {
+            return build(pair, valName);
+        }
         return build(className, valName, className);
     }
 
-    private static String mockGenerics(MockerDeconstruction mockerDeconstruction) {
+    private static List<String> mockGenerics(MockerDeconstruction mockerDeconstruction) {
         //mock 带泛型
         //OpResult<QueryBankTypeResult> queryBankTypeResultOpResult
+        //QueryBankTypeResult queryBankTypeResult = mock(QueryBankTypeResult.class);
         //OpResult<QueryBankTypeResult> queryBankTypeResultOpResult = mock(OpResult.class);
         String className = mockerDeconstruction.getClassName();
         String valName = mockerDeconstruction.getValName();
-        String classType = className.substring(0, className.indexOf("<") + 1);
-        return build(className, valName, classType);
+        String classType = className.substring(0, className.indexOf("<"));
+        String innerClassName = mockerDeconstruction.getInnerClassName();
+        String innerValName = mockerDeconstruction.getInnerValName();
+        String line1 = mockNormal(
+                new MockerDeconstruction.Builder()
+                        .setClassName(innerClassName)
+                        .setValName(innerValName)
+                        .build()
+        );
+        String line2 = build(className, valName, classType);
+        return Arrays.asList(line1, line2);
     }
 
     private static List<String> mockList(MockerDeconstruction mockerDeconstruction) {
@@ -97,4 +125,6 @@ public class MockerHandler {
         String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
         return Arrays.asList(line1, line2);
     }
+
+
 }

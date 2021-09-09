@@ -40,7 +40,7 @@ public class MockerResolver implements Resolver {
             String className = stringList.get(0);
             String valName = stringList.get(1);
             String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
-            String innerValName = CaseFormat.LOWER_CAMEL.to(LOWER_CAMEL, innerClassName);
+            String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.LIST)
                     .setClassName(className)
@@ -57,7 +57,7 @@ public class MockerResolver implements Resolver {
             String className = stringList.get(0);
             String valName = stringList.get(1);
             String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
-            String innerValName = CaseFormat.LOWER_CAMEL.to(LOWER_CAMEL, valName);
+            String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.OPTIONAL)
                     .setClassName(className)
@@ -70,13 +70,18 @@ public class MockerResolver implements Resolver {
         if (startString.contains("<") && startString.contains(">")) {
             //mock 带泛型
             //OpResult<QueryBankTypeResult> queryBankTypeResultOpResult
+            //QueryBankTypeResult queryBankTypeResult = mock(QueryBankTypeResult.class);
             //OpResult<QueryBankTypeResult> queryBankTypeResultOpResult = mock(OpResult.class);
             String className = stringList.get(0);
             String valName = stringList.get(1);
+            String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
+            String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.GENERICS)
                     .setClassName(className)
                     .setValName(valName)
+                    .setInnerClassName(innerClassName)
+                    .setInnerValName(innerValName)
                     .build();
         }
         //mock 普通的
@@ -90,4 +95,5 @@ public class MockerResolver implements Resolver {
                 .setValName(valName)
                 .build();
     }
+
 }

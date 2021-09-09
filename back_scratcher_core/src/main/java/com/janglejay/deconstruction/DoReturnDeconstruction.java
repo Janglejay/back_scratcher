@@ -4,13 +4,14 @@ package com.janglejay.deconstruction;
 import com.janglejay.enums.ReturnValueTypeEnum;
 import com.janglejay.enums.MethodTypeEnum;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class DoReturnDeconstruction extends Deconstruction{
+public class DoReturnDeconstruction extends Deconstruction {
     private final MethodTypeEnum methodType;
     private final ReturnValueTypeEnum returnValueType;
     private final String className;
@@ -79,9 +80,13 @@ public class DoReturnDeconstruction extends Deconstruction{
         public Builder buildRight(String right) {
             //不能把参数里面的 . 分割
             int dotIndex = right.indexOf(".");
-            String rl = right.substring(0, dotIndex);
+            //参数里面可能也有 .
+            if (dotIndex != -1 && dotIndex < right.indexOf("(")) {
+                className = right.substring(0, dotIndex);
+            } else {
+                className = "spy";
+            }
             String rr = right.substring(dotIndex + 1);
-            String className = rl;
             int leftBracketIndex = rr.indexOf("(");
             int rightBracketIndex = rr.lastIndexOf(")");
             String methodName = rr.substring(0, leftBracketIndex);
@@ -91,18 +96,25 @@ public class DoReturnDeconstruction extends Deconstruction{
                     .setMethodName(methodName)
                     .setArgs(argsNumber);
 
-            if (Character.isUpperCase(rl.charAt(0))) {
+            if (className.equals("spy")) {
+                this.setMethodType(MethodTypeEnum.PRIVATE);
+                return this;
+            }
+
+            if (Character.isUpperCase(className.charAt(0))) {
                 //Static
 //        CatMonitorUtils.addExeWithSubType(CatEventEnum.CLAIM_COMPANY_MODIFY_MATERIAL, ClaimAttrConstants.REPORT_CAT_SUCCESS + "");
 //        doNothing().when(CatMonitorUtils.class, "addExeWithSubType", any(), any());
                 this.setMethodType(MethodTypeEnum.STATIC);
+                return this;
             }
 
-            if (Character.isLowerCase(rl.charAt(0))) {
+            if (Character.isLowerCase(className.charAt(0))) {
                 //Normal or Final
 //        claimCheckService.checkOrderOwner(orderId, orderDetailId, userInfo);
 //        doNothing().when(claimCheckService).checkOrderOwner(anyLong(), anyLong(), any());
                 this.setMethodType(MethodTypeEnum.NORMAL);
+                return this;
             }
             return this;
         }
@@ -110,7 +122,6 @@ public class DoReturnDeconstruction extends Deconstruction{
         public DoReturnDeconstruction build() {
             return new DoReturnDeconstruction(this);
         }
-
 
 
     }

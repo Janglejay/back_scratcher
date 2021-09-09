@@ -31,6 +31,8 @@ public class BackScratcherMock {
                 ret = MockerHandler.doMocker(mockerDeconstruction);
             }catch (Exception e) {
                 log.error("{}", e);
+                continue;
+
             }
             out.println();
             if (ret != null) {
