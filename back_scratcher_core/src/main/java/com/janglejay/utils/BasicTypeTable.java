@@ -17,7 +17,7 @@ public class BasicTypeTable {
         TYPE_TABLE.put("float", "1.0F");
         TYPE_TABLE.put("double", "1.0D");
 
-        TYPE_TABLE.put("String", "String");
+        TYPE_TABLE.put("String", "\"String\"");
 
 //        Character, Byte, Boolean, Short, Integer, Long, Float, Double
         TYPE_TABLE.put("Character", "null");

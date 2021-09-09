@@ -10,7 +10,7 @@ public class MockerDeconstruction extends Deconstruction{
 //    String line1 = className + " " + valName + " = " + "new ArrayList<>();";
 //    String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
 //    String innerValName = CaseFormat.LOWER_CAMEL.to(LOWER_CAMEL, innerClassName);
-//    String line2 = mockNormal(Arrays.asList(innerClassName, innerValName));
+//    String line2 = mockNormal(ListUtils.of(innerClassName, innerValName));
 //    String line3 = valName + ".add(" + innerValName + ");";
     private final MockerTypeEnum mockerType;
     private final String className;

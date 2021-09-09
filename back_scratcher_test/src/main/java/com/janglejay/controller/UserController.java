@@ -29,6 +29,6 @@ public class UserController {
             List<User> users = userService.queryAllUser();
             return users;
         }
-        return Arrays.asList();
+        return ListUtils.of();
     }
 }

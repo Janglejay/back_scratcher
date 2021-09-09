@@ -26,6 +26,6 @@ public class UserService {
     public List<User> queryAllUser() {
         List<User> users = userDao.selectAllUser();
         if (!users.isEmpty()) return users;
-        return Collections.singletonList(new User("not anyone"));
+        return ListUtils.of(new User("not anyone"));
     }
 }

@@ -2,22 +2,28 @@ package com.janglejay.handler;
 
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
+import com.janglejay.resolver.impl.MockerResolver;
 import com.janglejay.utils.BasicTypeTable;
+import com.janglejay.utils.ListUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 @Slf4j
 public class MockerHandler {
     public static List<String> handle(MockerDeconstruction mockerDeconstruction) {
-        log.info("doMocker .......");
         MockerTypeEnum mockerTypeEnum = mockerDeconstruction.getMockerType();
 
+        if (mockerTypeEnum.equals(MockerTypeEnum.PARAMETER)) {
+            try {
+                return mockParameter(mockerDeconstruction);
+            } catch (Exception e) {
+                return new ArrayList<>();
+            }
+        }
         if (mockerTypeEnum.equals(MockerTypeEnum.LIST)) {
             return mockList(mockerDeconstruction);
         }
@@ -30,7 +36,7 @@ public class MockerHandler {
         }
 
         if (mockerTypeEnum.equals(MockerTypeEnum.NORMAL)) {
-            return Collections.singletonList(mockNormal(mockerDeconstruction));
+            return ListUtils.of(mockNormal(mockerDeconstruction));
         }
         return null;
     }
@@ -51,13 +57,28 @@ public class MockerHandler {
         return null;
     }
 
+    private static List<String> mockParameter(MockerDeconstruction mockerDeconstruction) throws Exception {
+        List<String> lines = new ArrayList<>();
+        String[] classNames = mockerDeconstruction.getClassName().split(",");
+        String[] valNames = mockerDeconstruction.getValName().split(",");
+        for (int i = 0; i < classNames.length; i++) {
+            MockerResolver mockerResolver = new MockerResolver();
+            lines.addAll(
+                    Objects.requireNonNull(MockerHandler.handle(
+                            mockerResolver.resolve(classNames[i] + " " + valNames[i])
+                    ))
+            );
+        }
+        return lines;
+    }
+
     private static String mockNormal(MockerDeconstruction mockerDeconstruction) {
         //mock 普通的
         //QueryBankTypeParam queryBankParam
         //QueryBankTypeParam queryBankParam = mock(QueryBankTypeParam.class);
         String className = mockerDeconstruction.getClassName();
-        Pair<String, String> pair = filterBasicType(className);
         String valName = mockerDeconstruction.getValName();
+        Pair<String, String> pair = filterBasicType(className);
         if (pair != null) {
             return build(pair, valName);
         }
@@ -81,7 +102,7 @@ public class MockerHandler {
                         .build()
         );
         String line2 = build(className, valName, classType);
-        return Arrays.asList(line1, line2);
+        return ListUtils.of(line1, line2);
     }
 
     private static List<String> mockList(MockerDeconstruction mockerDeconstruction) {
@@ -103,7 +124,7 @@ public class MockerHandler {
                         .build()
         );
         String line3 = valName + ".add(" + innerValName + ");";
-        return Arrays.asList(line1, line2, line3);
+        return ListUtils.of(line1, line2, line3);
     }
 
     private static List<String> mockOptional(MockerDeconstruction mockerDeconstruction) {
@@ -123,7 +144,7 @@ public class MockerHandler {
                         .build()
         );
         String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
-        return Arrays.asList(line1, line2);
+        return ListUtils.of(line1, line2);
     }
 
 

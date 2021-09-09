@@ -18,26 +18,53 @@ import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 public class MockerResolver implements Resolver {
 
     @Override
-    public MockerDeconstruction resolve(String line) throws Exception{
-        log.info("resolver running ......");
+    public MockerDeconstruction resolve(String line) throws Exception {
 //        String[] sides = line.split("=");
 //        String left = sides[0];
 //        String[] strings = left.split(" ");
 
-        List<String> stringList = Arrays.stream(line.split(" ")).filter(
-                x -> !x.trim().equals("")
-        ).collect(Collectors.toList());
+        if (line.contains(",")) {
+            //mock 参数
+            //RolePO role, List<PermOptionVO> permOptions, String operator
+            List<String> collect = Arrays.stream(line.split(","))
+                    .map(String::trim)
+                    .filter(
+                            trim -> !trim.equals("")
+                    )
+                    .collect(Collectors.toList());
+            List<String> classNames = new ArrayList<>();
+            List<String> valNames = new ArrayList<>();
+            for (String s : collect) {
+                List<String> list = Arrays.stream(s.split(" "))
+                        .map(String::trim)
+                        .filter(
+                                trim -> !trim.equals("")
+                        )
+                        .collect(Collectors.toList());
+                classNames.add(list.get(0));
+                valNames.add(list.get(1));
+            }
+            return new MockerDeconstruction.Builder()
+                    .setMockerType(MockerTypeEnum.PARAMETER)
+                    .setClassName(String.join(",",classNames))
+                    .setValName(String.join(",", valNames))
+                    .build();
 
-        if (stringList.isEmpty()) {
-            log.info("stringList is Empty .......");
         }
-
+        List<String> stringList = Arrays.stream(line.split(" "))
+                .map(String::trim)
+                .filter(
+                        trim -> !trim.equals("")
+                )
+                .collect(Collectors.toList());
         //m = function(arg);
         if (stringList.size() == 1) {
             stringList.add(0, LOWER_CAMEL.to(UPPER_CAMEL, stringList.get(0)));
         }
 
         String startString = stringList.get(0);
+
+
         if (startString.startsWith("List")) {
             //mock 容器List
             //List<QueryHeadBankInfoVO> superBankList

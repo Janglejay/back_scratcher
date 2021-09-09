@@ -4,7 +4,8 @@ public enum MockerTypeEnum {
     LIST(0),
     OPTIONAL(1),
     GENERICS(2),
-    NORMAL(3);
+    NORMAL(3),
+    PARAMETER(4);
     private int type;
 
     MockerTypeEnum(int type) {
