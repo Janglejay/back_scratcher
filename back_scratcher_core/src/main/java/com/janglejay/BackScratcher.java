@@ -45,6 +45,9 @@ public class BackScratcher {
             if (line.trim().equals("exit")) {
                 break;
             }
+            if (line.trim().startsWith("//")) {
+                line = line.substring(2);
+            }
             List<String> ret = null;
             try {
                 MixedDeconstruction mixedDeconstruction = (MixedDeconstruction) new MixedResolver().resolve(line);
