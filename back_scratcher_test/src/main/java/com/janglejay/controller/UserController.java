@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,6 @@ public class UserController {
             List<User> users = userService.queryAllUser();
             return users;
         }
-        return List.of();
+        return Arrays.asList();
     }
 }

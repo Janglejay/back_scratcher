@@ -3,7 +3,7 @@ package com.janglejay.enums;
 public enum MethodTypeEnum {
     NORMAL(0),
     STATIC(1),
-    FINAL(2);
+    PRIVATE(2);
     Integer code;
     MethodTypeEnum(Integer code) {
         this.code = code;

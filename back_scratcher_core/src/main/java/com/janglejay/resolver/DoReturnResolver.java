@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class DoReturnResolver implements Resolver {
     @Override
-    public DoReturnDeconstruction resolve(String line) {
+    public DoReturnDeconstruction resolve(String line) throws Exception{
         String[] sides = line.split("=");
         String left = null;
         String right = null;

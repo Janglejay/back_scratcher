@@ -9,6 +9,8 @@ import com.janglejay.resolver.MockerResolver;
 import com.janglejay.resolver.Resolver;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 import static com.janglejay.utils.MyInputOutput.in;
@@ -24,13 +26,21 @@ public class BackScratcherMock {
             //mock
             String string = in.nextLine();
             resolver = new MockerResolver();
-            MockerDeconstruction mockerDeconstruction = (MockerDeconstruction) resolver.resolve(string);
-            ret = MockerHandler.doMocker(mockerDeconstruction);
+            try {
+                MockerDeconstruction mockerDeconstruction = (MockerDeconstruction) resolver.resolve(string);
+                ret = MockerHandler.doMocker(mockerDeconstruction);
+            }catch (Exception e) {
+                log.error("{}", e);
+            }
             out.println();
             if (ret != null) {
+                StringBuilder data = new StringBuilder();
                 for (String s : ret) {
                     out.println(s);
+                    data.append(s + "\n");
                 }
+                StringSelection stringSelection = new StringSelection(data.toString());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             }
             out.println();
             out.flush();

@@ -16,7 +16,7 @@ import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 public class MockerResolver implements Resolver {
 
     @Override
-    public MockerDeconstruction resolve(String line) {
+    public MockerDeconstruction resolve(String line) throws Exception{
         log.info("resolver running ......");
 //        String[] sides = line.split("=");
 //        String left = sides[0];

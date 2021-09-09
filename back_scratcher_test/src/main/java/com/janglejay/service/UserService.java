@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +26,6 @@ public class UserService {
     public List<User> queryAllUser() {
         List<User> users = userDao.selectAllUser();
         if (!users.isEmpty()) return users;
-        return List.of(new User("not anyone"));
+        return Collections.singletonList(new User("not anyone"));
     }
 }

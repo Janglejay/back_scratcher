@@ -5,6 +5,7 @@ import com.janglejay.enums.MethodTypeEnum;
 import com.janglejay.enums.ReturnValueTypeEnum;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DoReturnHandler {
@@ -32,9 +33,14 @@ public class DoReturnHandler {
         for (int i = 0; i < doReturnDeconstruction.getArgsNumber(); i++) {
             anyList.add("any()");
         }
-        String args = String.join(", ", anyList);
-        String line = returnValue + "." + "when(" + className + ", " + "\"" + methodName +  "\", " + args + ");";
-        return List.of(line);
+        String args = anyList.isEmpty() ? null : String.join(", ", anyList);
+        String line = null;
+        if (args != null) {
+             line = returnValue + "." + "when(" + className + ", " + "\"" + methodName +  "\", " + args + ");";
+        }else {
+             line = returnValue + "." + "when(" + className + ", " + "\"" + methodName +  "\"" + ");";
+        }
+        return Arrays.asList(line);
     }
 
     private static List<String> buildNormal(DoReturnDeconstruction doReturnDeconstruction) {
@@ -50,7 +56,7 @@ public class DoReturnHandler {
         }
         String args = String.join(", ", anyList);
         String line = returnValue + "." + "when(" + className + ")." + methodName + "(" + args + ");";
-        return List.of(line);
+        return Arrays.asList(line);
     }
 
 }

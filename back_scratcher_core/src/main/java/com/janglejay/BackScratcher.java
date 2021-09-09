@@ -17,7 +17,7 @@ import static com.janglejay.utils.MyInputOutput.out;
 
 @Slf4j
 public class BackScratcher {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         while (true) {
             log.info("==========START==========");
             log.info("1.mock");

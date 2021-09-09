@@ -3,6 +3,7 @@ package com.janglejay.dao;
 import com.janglejay.entity.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -13,6 +14,12 @@ public class UserDao {
         User user2 = new User("user2");
         User user3 = new User("user3");
         User user4 = new User("user4");
-        return List.of(user, user1, user2, user3, user4);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+        users.add(user4);
+        return users;
     }
 }

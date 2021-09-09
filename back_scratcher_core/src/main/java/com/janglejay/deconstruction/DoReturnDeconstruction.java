@@ -5,6 +5,10 @@ import com.janglejay.enums.ReturnValueTypeEnum;
 import com.janglejay.enums.MethodTypeEnum;
 import lombok.Data;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 public class DoReturnDeconstruction extends Deconstruction{
     private final MethodTypeEnum methodType;
@@ -81,8 +85,8 @@ public class DoReturnDeconstruction extends Deconstruction{
             int leftBracketIndex = rr.indexOf("(");
             int rightBracketIndex = rr.lastIndexOf(")");
             String methodName = rr.substring(0, leftBracketIndex);
-            String[] args = rr.substring(leftBracketIndex + 1, rightBracketIndex).split(",");
-            int argsNumber = args.length;
+            List<String> args = Arrays.stream(rr.substring(leftBracketIndex + 1, rightBracketIndex).split(",")).filter(x -> !x.trim().equals("")).collect(Collectors.toList());
+            int argsNumber = args.size();
             this.setClassName(className)
                     .setMethodName(methodName)
                     .setArgs(argsNumber);

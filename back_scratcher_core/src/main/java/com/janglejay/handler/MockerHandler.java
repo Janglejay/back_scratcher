@@ -5,6 +5,7 @@ import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
@@ -23,10 +24,10 @@ public class MockerHandler {
         }
 
         if (mockerTypeEnum.equals(MockerTypeEnum.GENERICS)) {
-            return List.of(mockGenerics(mockerDeconstruction));
+            return Arrays.asList(mockGenerics(mockerDeconstruction));
         }
         if (mockerTypeEnum.equals(MockerTypeEnum.NORMAL)) {
-            return List.of(mockNormal(mockerDeconstruction));
+            return Arrays.asList(mockNormal(mockerDeconstruction));
         }
         return null;
     }
@@ -74,7 +75,7 @@ public class MockerHandler {
                         .build()
         );
         String line3 = valName + ".add(" + innerValName + ");";
-        return List.of(line1, line2, line3);
+        return Arrays.asList(line1, line2, line3);
     }
 
     private static List<String> mockOptional(MockerDeconstruction mockerDeconstruction) {
@@ -94,6 +95,6 @@ public class MockerHandler {
                         .build()
         );
         String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
-        return List.of(line1, line2);
+        return Arrays.asList(line1, line2);
     }
 }
