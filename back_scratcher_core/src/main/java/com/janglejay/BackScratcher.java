@@ -42,18 +42,22 @@ public class BackScratcher {
 //                    "                      /___/                                    \n");
             log.info("enter your code");
             String line = in.nextLine();
+            if (line.trim().equals("exit")) {
+                break;
+            }
             List<String> ret = null;
             try {
                 MixedDeconstruction mixedDeconstruction = (MixedDeconstruction) new MixedResolver().resolve(line);
                 ret = MixedHandler.handle(mixedDeconstruction);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 log.error("{}", e);
                 continue;
             }
             out.println();
             if (ret != null) {
                 StringBuilder data = new StringBuilder();
-                data.append("//\t" + line + "\n");
+                if (args[0].equals("y"))
+                    data.append("//\t" + line + "\n");
                 for (String s : ret) {
                     data.append(s + "\n");
                 }
@@ -63,6 +67,17 @@ public class BackScratcher {
             }
             out.println();
             out.flush();
+
         }
+        out.println("\n" +
+                " ██████╗  ██████╗  ██████╗ ██████╗ ██████╗ ██╗   ██╗███████╗\n" +
+                "██╔════╝ ██╔═══██╗██╔═══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝██╔════╝\n" +
+                "██║  ███╗██║   ██║██║   ██║██║  ██║██████╔╝ ╚████╔╝ █████╗  \n" +
+                "██║   ██║██║   ██║██║   ██║██║  ██║██╔══██╗  ╚██╔╝  ██╔══╝  \n" +
+                "╚██████╔╝╚██████╔╝╚██████╔╝██████╔╝██████╔╝   ██║   ███████╗\n" +
+                " ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝\n" +
+                "                                                            \n");
+        out.flush();
+        out.close();
     }
 }
