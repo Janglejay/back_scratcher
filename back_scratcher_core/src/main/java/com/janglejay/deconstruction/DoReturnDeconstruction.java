@@ -85,6 +85,7 @@ public class DoReturnDeconstruction extends Deconstruction {
                 className = right.substring(0, dotIndex);
             } else {
                 className = "spy";
+                dotIndex = -1;
             }
             String rr = right.substring(dotIndex + 1);
             int leftBracketIndex = rr.indexOf("(");
@@ -95,12 +96,10 @@ public class DoReturnDeconstruction extends Deconstruction {
             this.setClassName(className)
                     .setMethodName(methodName)
                     .setArgs(argsNumber);
-
             if (className.equals("spy")) {
                 this.setMethodType(MethodTypeEnum.PRIVATE);
                 return this;
             }
-
             if (Character.isUpperCase(className.charAt(0))) {
                 //Static
 //        CatMonitorUtils.addExeWithSubType(CatEventEnum.CLAIM_COMPANY_MODIFY_MATERIAL, ClaimAttrConstants.REPORT_CAT_SUCCESS + "");
