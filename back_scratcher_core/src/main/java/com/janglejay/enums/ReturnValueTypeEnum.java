@@ -1,18 +1,18 @@
 package com.janglejay.enums;
 
 public enum ReturnValueTypeEnum {
-    DORETURN(0),
-    DONOTHING(1);
-    Integer code;
-    ReturnValueTypeEnum(Integer code) {
-        this.code = code;
+    DO_RETURN(0),
+    DO_NOTHING(1);
+    int type;
+    ReturnValueTypeEnum(int type) {
+        this.type = type;
     }
-    public Integer getCode() {
-        return this.code;
+    public int getType() {
+        return this.type;
     }
-    public ReturnValueTypeEnum getByCode(Integer code) {
+    public ReturnValueTypeEnum getByType(int type) {
         for (ReturnValueTypeEnum value : values()) {
-            if (value.getCode().equals(code)) return value;
+            if (value.getType() == type) return value;
         }
         return null;
     }

@@ -1,11 +1,8 @@
 package com.janglejay;
 
-import com.janglejay.deconstruction.DoReturnDeconstruction;
 import com.janglejay.deconstruction.MockerDeconstruction;
-import com.janglejay.handler.DoReturnHandler;
 import com.janglejay.handler.MockerHandler;
-import com.janglejay.resolver.DoReturnResolver;
-import com.janglejay.resolver.MockerResolver;
+import com.janglejay.resolver.impl.MockerResolver;
 import com.janglejay.resolver.Resolver;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +25,7 @@ public class BackScratcherMock {
             resolver = new MockerResolver();
             try {
                 MockerDeconstruction mockerDeconstruction = (MockerDeconstruction) resolver.resolve(string);
-                ret = MockerHandler.doMocker(mockerDeconstruction);
+                ret = MockerHandler.handle(mockerDeconstruction);
             }catch (Exception e) {
                 log.error("{}", e);
                 continue;

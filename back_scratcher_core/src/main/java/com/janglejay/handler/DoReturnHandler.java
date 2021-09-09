@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DoReturnHandler {
 
-    public static List<String> doReturn(DoReturnDeconstruction doReturnDeconstruction) {
+    public static List<String> handle(DoReturnDeconstruction doReturnDeconstruction) {
         if (doReturnDeconstruction.getMethodType().equals(MethodTypeEnum.PRIVATE)) {
             return buildPrivate(doReturnDeconstruction);
         }
@@ -28,7 +28,7 @@ public class DoReturnHandler {
         String className = doReturnDeconstruction.getClassName();
         String methodName = doReturnDeconstruction.getMethodName();
         String returnValue = doReturnDeconstruction.getReturnValueType()
-                .equals(ReturnValueTypeEnum.DORETURN)
+                .equals(ReturnValueTypeEnum.DO_RETURN)
                 ? "doReturn(" + doReturnDeconstruction.getReturnValue() + ")"
                 : "doNothing()";
         List<String> anyList = new ArrayList<>();
@@ -49,7 +49,7 @@ public class DoReturnHandler {
         String className = doReturnDeconstruction.getClassName() + ".class";
         String methodName = doReturnDeconstruction.getMethodName();
         String returnValue = doReturnDeconstruction.getReturnValueType()
-                .equals(ReturnValueTypeEnum.DORETURN)
+                .equals(ReturnValueTypeEnum.DO_RETURN)
                 ? "doReturn(" + doReturnDeconstruction.getReturnValue() + ")"
                 : "doNothing()";
         List<String> anyList = new ArrayList<>();
@@ -70,7 +70,7 @@ public class DoReturnHandler {
         String className = doReturnDeconstruction.getClassName();
         String methodName = doReturnDeconstruction.getMethodName();
         String returnValue = doReturnDeconstruction.getReturnValueType()
-                .equals(ReturnValueTypeEnum.DORETURN)
+                .equals(ReturnValueTypeEnum.DO_RETURN)
                 ? "doReturn(" + doReturnDeconstruction.getReturnValue() + ")"
                 : "doNothing()";
         List<String> anyList = new ArrayList<>();
@@ -81,5 +81,7 @@ public class DoReturnHandler {
         String line = returnValue + "." + "when(" + className + ")." + methodName + "(" + args + ");";
         return Collections.singletonList(line);
     }
+
+
 
 }

@@ -2,14 +2,19 @@ package com.janglejay;
 
 import com.janglejay.deconstruction.Deconstruction;
 import com.janglejay.deconstruction.DoReturnDeconstruction;
+import com.janglejay.deconstruction.MixedDeconstruction;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.handler.DoReturnHandler;
+import com.janglejay.handler.MixedHandler;
 import com.janglejay.handler.MockerHandler;
-import com.janglejay.resolver.DoReturnResolver;
-import com.janglejay.resolver.MockerResolver;
+import com.janglejay.resolver.impl.DoReturnResolver;
+import com.janglejay.resolver.impl.MixedResolver;
+import com.janglejay.resolver.impl.MockerResolver;
 import com.janglejay.resolver.Resolver;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 import static com.janglejay.utils.MyInputOutput.in;
@@ -18,35 +23,43 @@ import static com.janglejay.utils.MyInputOutput.out;
 @Slf4j
 public class BackScratcher {
     public static void main(String[] args) throws Exception {
+        log.info("START BACK SCRATCHER");
+        out.println("\n" +
+                "██████╗  █████╗  ██████╗██╗  ██╗    ███████╗ ██████╗██████╗  █████╗ ████████╗ ██████╗██╗  ██╗███████╗██████╗ \n" +
+                "██╔══██╗██╔══██╗██╔════╝██║ ██╔╝    ██╔════╝██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║  ██║██╔════╝██╔══██╗\n" +
+                "██████╔╝███████║██║     █████╔╝     ███████╗██║     ██████╔╝███████║   ██║   ██║     ███████║█████╗  ██████╔╝\n" +
+                "██╔══██╗██╔══██║██║     ██╔═██╗     ╚════██║██║     ██╔══██╗██╔══██║   ██║   ██║     ██╔══██║██╔══╝  ██╔══██╗\n" +
+                "██████╔╝██║  ██║╚██████╗██║  ██╗    ███████║╚██████╗██║  ██║██║  ██║   ██║   ╚██████╗██║  ██║███████╗██║  ██║\n" +
+                "╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝\n" +
+                "                                                                                                             \n");
+        out.flush();
         while (true) {
-            log.info("==========START==========");
-            log.info("1.mock");
-            log.info("2.doReturn");
-            log.info("choose your option");
-            String choose = in.nextLine();
+//            out.println("\n" +
+//                    "           __                                             __   \n" +
+//                    " ___ ___  / /____ ____  __ _____  __ ______  _______  ___/ /__ \n" +
+//                    "/ -_) _ \\/ __/ -_) __/ / // / _ \\/ // / __/ / __/ _ \\/ _  / -_)\n" +
+//                    "\\__/_//_/\\__/\\__/_/    \\_, /\\___/\\_,_/_/    \\__/\\___/\\_,_/\\__/ \n" +
+//                    "                      /___/                                    \n");
+            log.info("enter your code");
+            String line = in.nextLine();
             List<String> ret = null;
-            Resolver resolver;
-            //mock
-            if (choose.trim().equals(String.valueOf(1))) {
-                log.info("your choose is mock ......");
-                String string = in.nextLine();
-                resolver  = new MockerResolver();
-                MockerDeconstruction mockerDeconstruction = (MockerDeconstruction) resolver.resolve(string);
-                ret = MockerHandler.doMocker(mockerDeconstruction);
-            }
-            //doReturn
-            if (choose.trim().equals(String.valueOf(2))) {
-                log.info("your choose is doReturn ......");
-                String string = in.nextLine();
-                resolver  = new DoReturnResolver();
-                DoReturnDeconstruction doReturnDeconstruction = (DoReturnDeconstruction) resolver.resolve(string);
-                ret = DoReturnHandler.doReturn(doReturnDeconstruction);
+            try {
+                MixedDeconstruction mixedDeconstruction = (MixedDeconstruction) new MixedResolver().resolve(line);
+                ret = MixedHandler.handle(mixedDeconstruction);
+            }catch (Exception e) {
+                log.error("{}", e);
+                continue;
             }
             out.println();
             if (ret != null) {
+                StringBuilder data = new StringBuilder();
+                data.append("//\t" + line + "\n");
                 for (String s : ret) {
-                    out.println(s);
+                    data.append(s + "\n");
                 }
+                out.println(data);
+                StringSelection stringSelection = new StringSelection(data.toString());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             }
             out.println();
             out.flush();

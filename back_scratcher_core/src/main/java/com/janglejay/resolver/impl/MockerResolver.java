@@ -1,8 +1,9 @@
-package com.janglejay.resolver;
+package com.janglejay.resolver.impl;
 
 import com.google.common.base.CaseFormat;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
+import com.janglejay.resolver.Resolver;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 
 @Slf4j
 public class MockerResolver implements Resolver {
@@ -28,6 +30,11 @@ public class MockerResolver implements Resolver {
 
         if (stringList.isEmpty()) {
             log.info("stringList is Empty .......");
+        }
+
+        //m = function(arg);
+        if (stringList.size() == 1) {
+            stringList.add(0, LOWER_CAMEL.to(UPPER_CAMEL, stringList.get(0)));
         }
 
         String startString = stringList.get(0);

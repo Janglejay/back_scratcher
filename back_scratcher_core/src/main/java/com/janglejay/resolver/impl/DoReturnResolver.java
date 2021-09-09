@@ -1,9 +1,8 @@
-package com.janglejay.resolver;
+package com.janglejay.resolver.impl;
 
-import com.janglejay.deconstruction.Deconstruction;
 import com.janglejay.deconstruction.DoReturnDeconstruction;
-import com.janglejay.enums.MethodTypeEnum;
 import com.janglejay.enums.ReturnValueTypeEnum;
+import com.janglejay.resolver.Resolver;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,17 +15,17 @@ public class DoReturnResolver implements Resolver {
         String left = null;
         String right = null;
         ReturnValueTypeEnum returnValueType = resolveReturnValueType(sides);
-        if (returnValueType.equals(ReturnValueTypeEnum.DONOTHING)) {
+        if (returnValueType.equals(ReturnValueTypeEnum.DO_NOTHING)) {
             //doNothing
             right = sides[0].trim();
 
             return new DoReturnDeconstruction.Builder()
-                    .setReturnValueType(ReturnValueTypeEnum.DONOTHING)
+                    .setReturnValueType(ReturnValueTypeEnum.DO_NOTHING)
                     .buildRight(right)
                     .build();
         }
 
-        if (returnValueType.equals(ReturnValueTypeEnum.DORETURN)) {
+        if (returnValueType.equals(ReturnValueTypeEnum.DO_RETURN)) {
             //doReturn
 
 //        QueryBankTypeResultOpResult queryBankTypeResultOpResult = queryBankDelegate.getCardBinInfoByCardNo(queryBankParam)
@@ -40,9 +39,10 @@ public class DoReturnResolver implements Resolver {
                     x -> !x.trim().equals("")
             ).collect(Collectors.toList());
 
+
             return new DoReturnDeconstruction.Builder()
-                    .setReturnValueType(ReturnValueTypeEnum.DORETURN)
-                    .setReturnValue(list.get(1))
+                    .setReturnValueType(ReturnValueTypeEnum.DO_RETURN)
+                    .setReturnValue(list.get(list.size() - 1))
                     .buildRight(right)
                     .build();
         }
@@ -50,8 +50,8 @@ public class DoReturnResolver implements Resolver {
     }
 
     private ReturnValueTypeEnum resolveReturnValueType(String[] sides) {
-        if (sides.length == 1) return ReturnValueTypeEnum.DONOTHING;
-        return ReturnValueTypeEnum.DORETURN;
+        if (sides.length == 1) return ReturnValueTypeEnum.DO_NOTHING;
+        return ReturnValueTypeEnum.DO_RETURN;
     }
 
 

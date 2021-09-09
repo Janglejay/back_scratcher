@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 public class MockerHandler {
-    public static List<String> doMocker(MockerDeconstruction mockerDeconstruction) {
+    public static List<String> handle(MockerDeconstruction mockerDeconstruction) {
         log.info("doMocker .......");
         MockerTypeEnum mockerTypeEnum = mockerDeconstruction.getMockerType();
 
@@ -41,12 +41,12 @@ public class MockerHandler {
     }
 
     private static String build(Pair<String, String> basicType, String valName) {
-        return basicType.getKey() + " " + valName + " = " + basicType.getValue() + ");";
+        return basicType.getKey() + " " + valName + " = " + basicType.getValue() + ";";
     }
 
     private static Pair<String, String> filterBasicType(String className) {
         if (BasicTypeTable.TYPE_TABLE.containsKey(className)) {
-            Pair<String, String> pair = new ImmutablePair<>(className, BasicTypeTable.TYPE_TABLE.get(className));
+            return new ImmutablePair<>(className, BasicTypeTable.TYPE_TABLE.get(className));
         }
         return null;
     }

@@ -4,16 +4,16 @@ public enum MethodTypeEnum {
     NORMAL(0),
     STATIC(1),
     PRIVATE(2);
-    Integer code;
-    MethodTypeEnum(Integer code) {
-        this.code = code;
+    int type;
+    MethodTypeEnum(int type) {
+        this.type = type;
     }
-    public Integer getCode() {
-        return this.code;
+    public int getType() {
+        return this.type;
     }
-    public MethodTypeEnum getByCode(Integer code) {
+    public MethodTypeEnum getByType(int type) {
         for (MethodTypeEnum value : values()) {
-            if (value.getCode().equals(code)) return value;
+            if (value.getType() == type) return value;
         }
         return null;
     }
