@@ -4,7 +4,7 @@ public enum MethodTypeEnum {
     NORMAL(0),
     STATIC(1),
     PRIVATE(2);
-    int type;
+    private int type;
     MethodTypeEnum(int type) {
         this.type = type;
     }

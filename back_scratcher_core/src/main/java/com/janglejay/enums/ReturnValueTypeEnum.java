@@ -3,7 +3,7 @@ package com.janglejay.enums;
 public enum ReturnValueTypeEnum {
     DO_RETURN(0),
     DO_NOTHING(1);
-    int type;
+    private int type;
     ReturnValueTypeEnum(int type) {
         this.type = type;
     }
