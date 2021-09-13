@@ -62,6 +62,17 @@ public class MockerResolver implements Resolver {
             stringList.add(0, LOWER_CAMEL.to(UPPER_CAMEL, stringList.get(0)));
         }
 
+        if (stringList.size() > 2) {
+            //List < Integer > list
+            List<String> joinList = new ArrayList<>();
+            String str = "";
+            for (int i = 0; i < stringList.size() - 1; i++) {
+                str += stringList.get(i);
+            }
+            joinList.add(str);
+            joinList.add(stringList.get(stringList.size() - 1));
+            stringList = joinList;
+        }
         String startString = stringList.get(0);
 
 
@@ -73,7 +84,7 @@ public class MockerResolver implements Resolver {
             //superBankList.add(queryHeadBankInfoVo);
             String className = stringList.get(0);
             String valName = stringList.get(1);
-            String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
+            String innerClassName = className.substring(className.indexOf("<") + 1, className.lastIndexOf(">")).trim();
             String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.LIST)
@@ -90,7 +101,7 @@ public class MockerResolver implements Resolver {
             //Optional<ClaimBankInfo> optional = Optional.of(claimBankInfo);
             String className = stringList.get(0);
             String valName = stringList.get(1);
-            String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
+            String innerClassName = className.substring(className.indexOf("<") + 1, className.lastIndexOf(">")).trim();
             String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.OPTIONAL)
@@ -108,7 +119,7 @@ public class MockerResolver implements Resolver {
             //OpResult<QueryBankTypeResult> queryBankTypeResultOpResult = mock(OpResult.class);
             String className = stringList.get(0);
             String valName = stringList.get(1);
-            String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
+            String innerClassName = className.substring(className.indexOf("<") + 1, className.lastIndexOf(">")).trim();
             String innerValName = CaseFormat.UPPER_CAMEL.to(LOWER_CAMEL, innerClassName);
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.GENERICS)

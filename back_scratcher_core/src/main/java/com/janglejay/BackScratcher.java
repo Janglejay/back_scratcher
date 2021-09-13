@@ -46,7 +46,7 @@ public class BackScratcher {
                 break;
             }
             if (line.trim().startsWith("//")) {
-                line = line.substring(2);
+                line = line.trim().substring(2);
             }
             List<String> ret = null;
             try {

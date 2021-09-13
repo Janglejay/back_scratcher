@@ -1,4 +1,4 @@
-# Back scrather
+# Back Scrather
 
 该工具主要为了减少单测编写中的重复工作。目前完成的版本为basic_function，实现了对常见格式的语句生成对应的PowerMock代码。
 
@@ -16,7 +16,9 @@
 
    ![4C6qNF.png](https://z3.ax1x.com/2021/09/13/4C6qNF.png)
 
-# 使用说明
+# 版本信息
+
+![version-basic_function](https://img.shields.io/badge/version-basic__function-green)
 
 1. 该程序生成的代码是基于PowerMock框架的，所以需要使用者熟悉PowerMock的写法。
 2. 该程序目前不能直接对一个方法进行自动生成（这是未来努力的目标），只能对具有一定格式的代码进行mock。
@@ -151,7 +153,7 @@
       doNothing().when(spy, "function", any());
       ```
 
-      ## 静态方法
+## 静态方法
 
 1. ClassA a = ClassB.function(arg1);`
 
@@ -166,30 +168,20 @@
 
    这种格式说明`function()`是`ClassB`中的静态方法。
 
-   2. `a = ClassB.function(arg1);`
+2. `a = ClassB.function(arg1);`
 
-      生成代码：
+   生成代码：
 
-      ```java
-      A a = mock(A.class);
-      doReturn(a).when(ClassB.class, "function", any());
-      ```
+   ```java
+   A a = mock(A.class);
+   doReturn(a).when(ClassB.class, "function", any());
+   ```
 
-   3. `ClassB.function();`
+3. `ClassB.function();`
 
-      生成代码：
+   生成代码：
 
-      ```java
-      doNothing().when(ClassB.class, "function");
-      ```
-
-## 联系方式
-
-希望能听到您宝贵的意见。:relaxed::relaxed:
-
-QQ:1578528245
-
-WeChat:jarforu66
-
-Tel:18644045901
+   ```java
+   doNothing().when(ClassB.class, "function");
+   ```
 

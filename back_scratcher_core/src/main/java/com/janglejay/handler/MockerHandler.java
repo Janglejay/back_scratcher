@@ -61,8 +61,8 @@ public class MockerHandler {
         List<String> lines = new ArrayList<>();
         String[] classNames = mockerDeconstruction.getClassName().split(",");
         String[] valNames = mockerDeconstruction.getValName().split(",");
+        MockerResolver mockerResolver = new MockerResolver();
         for (int i = 0; i < classNames.length; i++) {
-            MockerResolver mockerResolver = new MockerResolver();
             lines.addAll(
                     Objects.requireNonNull(MockerHandler.handle(
                             mockerResolver.resolve(classNames[i] + " " + valNames[i])
@@ -95,12 +95,17 @@ public class MockerHandler {
         String classType = className.substring(0, className.indexOf("<"));
         String innerClassName = mockerDeconstruction.getInnerClassName();
         String innerValName = mockerDeconstruction.getInnerValName();
-        String line1 = mockNormal(
-                new MockerDeconstruction.Builder()
-                        .setClassName(innerClassName)
-                        .setValName(innerValName)
-                        .build()
-        );
+
+
+        MockerResolver resolver = new MockerResolver();
+        MockerDeconstruction deconstruction = null;
+        try {
+            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line1 = MockerHandler.handle(deconstruction).get(0);
+
         String line2 = build(className, valName, classType);
         return ListUtils.of(line1, line2);
     }
@@ -116,13 +121,16 @@ public class MockerHandler {
         String line1 = className + " " + valName + " = " + "new ArrayList<>();";
         String innerClassName = mockerDeconstruction.getInnerClassName();
         String innerValName = mockerDeconstruction.getInnerValName();
-        String line2 = mockNormal(
-                new MockerDeconstruction.Builder()
-                        .setMockerType(MockerTypeEnum.NORMAL)
-                        .setClassName(innerClassName)
-                        .setValName(innerValName)
-                        .build()
-        );
+
+        MockerResolver resolver = new MockerResolver();
+        MockerDeconstruction deconstruction = null;
+        try {
+            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line2 = MockerHandler.handle(deconstruction).get(0);
+
         String line3 = valName + ".add(" + innerValName + ");";
         return ListUtils.of(line1, line2, line3);
     }
@@ -136,13 +144,16 @@ public class MockerHandler {
         String valName = mockerDeconstruction.getValName();
         String innerClassName = mockerDeconstruction.getInnerClassName();
         String innerValName = mockerDeconstruction.getInnerValName();
-        String line1 = mockNormal(
-                new MockerDeconstruction.Builder()
-                        .setMockerType(MockerTypeEnum.NORMAL)
-                        .setClassName(innerClassName)
-                        .setValName(innerValName)
-                        .build()
-        );
+
+
+        MockerResolver resolver = new MockerResolver();
+        MockerDeconstruction deconstruction = null;
+        try {
+            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line1 = MockerHandler.handle(deconstruction).get(0);
         String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
         return ListUtils.of(line1, line2);
     }
