@@ -104,10 +104,11 @@ public class MockerHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String line1 = MockerHandler.handle(deconstruction).get(0);
-
+        List<String> ret = new ArrayList<>();
+        ret.addAll(MockerHandler.handle(deconstruction));
         String line2 = build(className, valName, classType);
-        return ListUtils.of(line1, line2);
+        ret.add(line2);
+        return ret;
     }
 
     private static List<String> mockList(MockerDeconstruction mockerDeconstruction) {
@@ -124,15 +125,18 @@ public class MockerHandler {
 
         MockerResolver resolver = new MockerResolver();
         MockerDeconstruction deconstruction = null;
+        List<String> ret = new ArrayList<>();
         try {
             deconstruction = resolver.resolve(innerClassName + " " + innerValName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String line2 = MockerHandler.handle(deconstruction).get(0);
+        ret.add(line1);
+        ret.addAll(MockerHandler.handle(deconstruction));
 
         String line3 = valName + ".add(" + innerValName + ");";
-        return ListUtils.of(line1, line2, line3);
+        ret.add(line3);
+        return ret;
     }
 
     private static List<String> mockOptional(MockerDeconstruction mockerDeconstruction) {
@@ -148,14 +152,16 @@ public class MockerHandler {
 
         MockerResolver resolver = new MockerResolver();
         MockerDeconstruction deconstruction = null;
+        List<String> ret = new ArrayList<>();
         try {
             deconstruction = resolver.resolve(innerClassName + " " + innerValName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String line1 = MockerHandler.handle(deconstruction).get(0);
+        ret.addAll(MockerHandler.handle(deconstruction));
         String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
-        return ListUtils.of(line1, line2);
+        ret.add(line2);
+        return ret;
     }
 
 
