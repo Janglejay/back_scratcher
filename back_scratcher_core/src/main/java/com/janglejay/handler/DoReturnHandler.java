@@ -3,7 +3,7 @@ package com.janglejay.handler;
 import com.janglejay.deconstruction.DoReturnDeconstruction;
 import com.janglejay.enums.MethodTypeEnum;
 import com.janglejay.enums.ReturnValueTypeEnum;
-import com.janglejay.utils.ListUtils;
+import com.janglejay.utils.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class DoReturnHandler {
         }else {
             line = returnValue + "." + "when(" + className + ", " + "\"" + methodName +  "\"" + ");";
         }
-        return ListUtils.of(line);
+        return ListUtil.of(line);
     }
 
     private static List<String> buildStatic(DoReturnDeconstruction doReturnDeconstruction) {
@@ -63,7 +63,7 @@ public class DoReturnHandler {
         }else {
              line = returnValue + "." + "when(" + className + ", " + "\"" + methodName +  "\"" + ");";
         }
-        return ListUtils.of(line);
+        return ListUtil.of(line);
     }
 
     private static List<String> buildNormal(DoReturnDeconstruction doReturnDeconstruction) {
@@ -79,7 +79,7 @@ public class DoReturnHandler {
         }
         String args = String.join(", ", anyList);
         String line = returnValue + "." + "when(" + className + ")." + methodName + "(" + args + ");";
-        return ListUtils.of(line);
+        return ListUtil.of(line);
     }
 
 

@@ -1,4 +1,4 @@
-package com.janglejay;
+package com.janglejay.com;
 
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.handler.MockerHandler;

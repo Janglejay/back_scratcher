@@ -2,13 +2,12 @@ package com.janglejay.controller;
 
 import com.janglejay.entity.User;
 import com.janglejay.service.UserService;
-import com.janglejay.utils.ListUtils;
+import com.janglejay.utils.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,6 +29,6 @@ public class UserController {
             List<User> users = userService.queryAllUser();
             return users;
         }
-        return ListUtils.of();
+        return ListUtil.of();
     }
 }

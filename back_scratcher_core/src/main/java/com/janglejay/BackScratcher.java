@@ -1,16 +1,8 @@
 package com.janglejay;
 
-import com.janglejay.deconstruction.Deconstruction;
-import com.janglejay.deconstruction.DoReturnDeconstruction;
 import com.janglejay.deconstruction.MixedDeconstruction;
-import com.janglejay.deconstruction.MockerDeconstruction;
-import com.janglejay.handler.DoReturnHandler;
 import com.janglejay.handler.MixedHandler;
-import com.janglejay.handler.MockerHandler;
-import com.janglejay.resolver.impl.DoReturnResolver;
 import com.janglejay.resolver.impl.MixedResolver;
-import com.janglejay.resolver.impl.MockerResolver;
-import com.janglejay.resolver.Resolver;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -19,27 +11,14 @@ import java.util.List;
 
 import static com.janglejay.utils.MyInputOutput.in;
 import static com.janglejay.utils.MyInputOutput.out;
-
+import static com.janglejay.utils.ImageUtil.*;
 @Slf4j
 public class BackScratcher {
     public static void main(String[] args) throws Exception {
         log.info("START BACK SCRATCHER");
-        out.println("\n" +
-                "██████╗  █████╗  ██████╗██╗  ██╗    ███████╗ ██████╗██████╗  █████╗ ████████╗ ██████╗██╗  ██╗███████╗██████╗ \n" +
-                "██╔══██╗██╔══██╗██╔════╝██║ ██╔╝    ██╔════╝██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║  ██║██╔════╝██╔══██╗\n" +
-                "██████╔╝███████║██║     █████╔╝     ███████╗██║     ██████╔╝███████║   ██║   ██║     ███████║█████╗  ██████╔╝\n" +
-                "██╔══██╗██╔══██║██║     ██╔═██╗     ╚════██║██║     ██╔══██╗██╔══██║   ██║   ██║     ██╔══██║██╔══╝  ██╔══██╗\n" +
-                "██████╔╝██║  ██║╚██████╗██║  ██╗    ███████║╚██████╗██║  ██║██║  ██║   ██║   ╚██████╗██║  ██║███████╗██║  ██║\n" +
-                "╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝\n" +
-                "                                                                                                             \n");
+        out.println(LOGO);
         out.flush();
         while (true) {
-//            out.println("\n" +
-//                    "           __                                             __   \n" +
-//                    " ___ ___  / /____ ____  __ _____  __ ______  _______  ___/ /__ \n" +
-//                    "/ -_) _ \\/ __/ -_) __/ / // / _ \\/ // / __/ / __/ _ \\/ _  / -_)\n" +
-//                    "\\__/_//_/\\__/\\__/_/    \\_, /\\___/\\_,_/_/    \\__/\\___/\\_,_/\\__/ \n" +
-//                    "                      /___/                                    \n");
             log.info("enter your code");
             String line = in.nextLine();
             if (line.trim().equals("exit")) {
@@ -72,14 +51,7 @@ public class BackScratcher {
             out.flush();
 
         }
-        out.println("\n" +
-                " ██████╗  ██████╗  ██████╗ ██████╗ ██████╗ ██╗   ██╗███████╗\n" +
-                "██╔════╝ ██╔═══██╗██╔═══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝██╔════╝\n" +
-                "██║  ███╗██║   ██║██║   ██║██║  ██║██████╔╝ ╚████╔╝ █████╗  \n" +
-                "██║   ██║██║   ██║██║   ██║██║  ██║██╔══██╗  ╚██╔╝  ██╔══╝  \n" +
-                "╚██████╔╝╚██████╔╝╚██████╔╝██████╔╝██████╔╝   ██║   ███████╗\n" +
-                " ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝\n" +
-                "                                                            \n");
+        out.println(GOOD_BYE);
         out.flush();
         out.close();
     }

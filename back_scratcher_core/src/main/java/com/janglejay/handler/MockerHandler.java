@@ -4,7 +4,7 @@ import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
 import com.janglejay.resolver.impl.MockerResolver;
 import com.janglejay.utils.BasicTypeTable;
-import com.janglejay.utils.ListUtils;
+import com.janglejay.utils.ListUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,7 +36,7 @@ public class MockerHandler {
         }
 
         if (mockerTypeEnum.equals(MockerTypeEnum.NORMAL)) {
-            return ListUtils.of(mockNormal(mockerDeconstruction));
+            return ListUtil.of(mockNormal(mockerDeconstruction));
         }
         return null;
     }
