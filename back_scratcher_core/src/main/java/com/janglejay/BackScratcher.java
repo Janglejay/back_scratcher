@@ -49,7 +49,6 @@ public class BackScratcher {
             }
             out.println();
             out.flush();
-
         }
         out.println(GOOD_BYE);
         out.flush();
