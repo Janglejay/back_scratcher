@@ -1,9 +1,9 @@
 package com.janglejay.service;
 
+import com.google.common.collect.Lists;
 import com.janglejay.myEnum.UserEnum;
 import com.janglejay.dao.UserDao;
 import com.janglejay.entity.User;
-import com.janglejay.utils.ListUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,6 @@ public class UserService {
     public List<User> queryAllUser() {
         List<User> users = userDao.selectAllUser();
         if (!users.isEmpty()) return users;
-        return ListUtil.of(new User("not anyone"));
+        return Lists.newArrayList(new User("not anyone"));
     }
 }

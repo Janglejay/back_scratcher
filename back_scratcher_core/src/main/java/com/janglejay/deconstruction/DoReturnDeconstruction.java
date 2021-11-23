@@ -1,10 +1,10 @@
 package com.janglejay.deconstruction;
 
 
+import com.janglejay.constant.StringConstants;
 import com.janglejay.enums.ReturnValueTypeEnum;
 import com.janglejay.enums.MethodTypeEnum;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -91,7 +91,7 @@ public class DoReturnDeconstruction extends Deconstruction {
             int leftBracketIndex = rr.indexOf("(");
             int rightBracketIndex = rr.lastIndexOf(")");
             String methodName = rr.substring(0, leftBracketIndex);
-            List<String> args = Arrays.stream(rr.substring(leftBracketIndex + 1, rightBracketIndex).split(",")).filter(x -> !x.trim().equals("")).collect(Collectors.toList());
+            List<String> args = Arrays.stream(rr.substring(leftBracketIndex + 1, rightBracketIndex).split(StringConstants.COMMA)).filter(x -> !x.trim().equals("")).collect(Collectors.toList());
             int argsNumber = args.size();
             this.setClassName(className)
                     .setMethodName(methodName)

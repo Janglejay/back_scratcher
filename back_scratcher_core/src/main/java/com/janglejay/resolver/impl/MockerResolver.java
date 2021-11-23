@@ -1,6 +1,7 @@
 package com.janglejay.resolver.impl;
 
 import com.google.common.base.CaseFormat;
+import com.janglejay.constant.StringConstants;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
 import com.janglejay.resolver.Resolver;
@@ -21,12 +22,12 @@ public class MockerResolver implements Resolver {
     public MockerDeconstruction resolve(String line) throws Exception {
 //        String[] sides = line.split("=");
 //        String left = sides[0];
-//        String[] strings = left.split(" ");
+//        String[] strings = left.split(StringConstants.SPACE);
 
-        if (line.contains(",")) {
+        if (line.contains(StringConstants.COMMA)) {
             //mock 参数
             //RolePO role, List<PermOptionVO> permOptions, String operator
-            List<String> collect = Arrays.stream(line.split(","))
+            List<String> collect = Arrays.stream(line.split(StringConstants.COMMA))
                     .map(String::trim)
                     .filter(
                             trim -> !trim.equals("")
@@ -35,7 +36,7 @@ public class MockerResolver implements Resolver {
             List<String> classNames = new ArrayList<>();
             List<String> valNames = new ArrayList<>();
             for (String s : collect) {
-                List<String> list = Arrays.stream(s.split(" "))
+                List<String> list = Arrays.stream(s.split(StringConstants.SPACE))
                         .map(String::trim)
                         .filter(
                                 trim -> !trim.equals("")
@@ -46,12 +47,12 @@ public class MockerResolver implements Resolver {
             }
             return new MockerDeconstruction.Builder()
                     .setMockerType(MockerTypeEnum.PARAMETER)
-                    .setClassName(String.join(",",classNames))
-                    .setValName(String.join(",", valNames))
+                    .setClassName(String.join(StringConstants.COMMA,classNames))
+                    .setValName(String.join(StringConstants.COMMA, valNames))
                     .build();
 
         }
-        List<String> stringList = Arrays.stream(line.split(" "))
+        List<String> stringList = Arrays.stream(line.split(StringConstants.SPACE))
                 .map(String::trim)
                 .filter(
                         trim -> !trim.equals("")

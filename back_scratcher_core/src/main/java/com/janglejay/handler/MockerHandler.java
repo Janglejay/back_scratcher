@@ -1,15 +1,18 @@
 package com.janglejay.handler;
 
+import com.google.common.collect.Lists;
+import com.janglejay.constant.StringConstants;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.enums.MockerTypeEnum;
 import com.janglejay.resolver.impl.MockerResolver;
 import com.janglejay.utils.BasicTypeTable;
-import com.janglejay.utils.ListUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -17,37 +20,37 @@ public class MockerHandler {
     public static List<String> handle(MockerDeconstruction mockerDeconstruction) {
         MockerTypeEnum mockerTypeEnum = mockerDeconstruction.getMockerType();
 
-        if (mockerTypeEnum.equals(MockerTypeEnum.PARAMETER)) {
+        if (Objects.equals(mockerTypeEnum, MockerTypeEnum.PARAMETER)) {
             try {
                 return mockParameter(mockerDeconstruction);
             } catch (Exception e) {
                 return new ArrayList<>();
             }
         }
-        if (mockerTypeEnum.equals(MockerTypeEnum.LIST)) {
+        if (Objects.equals(mockerTypeEnum, MockerTypeEnum.LIST)) {
             return mockList(mockerDeconstruction);
         }
-        if (mockerTypeEnum.equals(MockerTypeEnum.OPTIONAL)) {
+        if (Objects.equals(mockerTypeEnum, MockerTypeEnum.OPTIONAL)) {
             return mockOptional(mockerDeconstruction);
         }
 
-        if (mockerTypeEnum.equals(MockerTypeEnum.GENERICS)) {
+        if (Objects.equals(mockerTypeEnum, MockerTypeEnum.GENERICS)) {
             return mockGenerics(mockerDeconstruction);
         }
 
-        if (mockerTypeEnum.equals(MockerTypeEnum.NORMAL)) {
-            return ListUtil.of(mockNormal(mockerDeconstruction));
+        if (Objects.equals(mockerTypeEnum, MockerTypeEnum.NORMAL)) {
+            return Lists.newArrayList(mockNormal(mockerDeconstruction));
         }
         return null;
     }
 
 
     private static String build(String className, String valName, String classType) {
-        return className + " " + valName + " = " + "mock(" + classType + ".class);";
+        return className + StringConstants.SPACE + valName + " = " + "mock(" + classType + ".class);";
     }
 
     private static String build(Pair<String, String> basicType, String valName) {
-        return basicType.getKey() + " " + valName + " = " + basicType.getValue() + ";";
+        return basicType.getKey() + StringConstants.SPACE + valName + " = " + basicType.getValue() + ";";
     }
 
     private static Pair<String, String> filterBasicType(String className) {
@@ -59,13 +62,13 @@ public class MockerHandler {
 
     private static List<String> mockParameter(MockerDeconstruction mockerDeconstruction) throws Exception {
         List<String> lines = new ArrayList<>();
-        String[] classNames = mockerDeconstruction.getClassName().split(",");
-        String[] valNames = mockerDeconstruction.getValName().split(",");
+        String[] classNames = mockerDeconstruction.getClassName().split(StringConstants.COMMA);
+        String[] valNames = mockerDeconstruction.getValName().split(StringConstants.COMMA);
         MockerResolver mockerResolver = new MockerResolver();
         for (int i = 0; i < classNames.length; i++) {
             lines.addAll(
                     Objects.requireNonNull(MockerHandler.handle(
-                            mockerResolver.resolve(classNames[i] + " " + valNames[i])
+                            mockerResolver.resolve(classNames[i] + StringConstants.SPACE + valNames[i])
                     ))
             );
         }
@@ -79,7 +82,7 @@ public class MockerHandler {
         String className = mockerDeconstruction.getClassName();
         String valName = mockerDeconstruction.getValName();
         Pair<String, String> pair = filterBasicType(className);
-        if (pair != null) {
+        if (Objects.nonNull(pair)) {
             return build(pair, valName);
         }
         return build(className, valName, className);
@@ -100,7 +103,7 @@ public class MockerHandler {
         MockerResolver resolver = new MockerResolver();
         MockerDeconstruction deconstruction = null;
         try {
-            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+            deconstruction = resolver.resolve(innerClassName + StringConstants.SPACE + innerValName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +122,7 @@ public class MockerHandler {
         //superBankList.add(queryHeadBankInfoVo);
         String className = mockerDeconstruction.getClassName();
         String valName = mockerDeconstruction.getValName();
-        String line1 = className + " " + valName + " = " + "new ArrayList<>();";
+        String line1 = className + StringConstants.SPACE + valName + " = " + "new ArrayList<>();";
         String innerClassName = mockerDeconstruction.getInnerClassName();
         String innerValName = mockerDeconstruction.getInnerValName();
 
@@ -127,7 +130,7 @@ public class MockerHandler {
         MockerDeconstruction deconstruction = null;
         List<String> ret = new ArrayList<>();
         try {
-            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+            deconstruction = resolver.resolve(innerClassName + StringConstants.SPACE + innerValName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,12 +157,12 @@ public class MockerHandler {
         MockerDeconstruction deconstruction = null;
         List<String> ret = new ArrayList<>();
         try {
-            deconstruction = resolver.resolve(innerClassName + " " + innerValName);
+            deconstruction = resolver.resolve(innerClassName + StringConstants.SPACE + innerValName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         ret.addAll(MockerHandler.handle(deconstruction));
-        String line2 = className + " " + valName + " = " + "Optional.of(" + innerValName + ");";
+        String line2 = className + StringConstants.SPACE + valName + " = " + "Optional.of(" + innerValName + ");";
         ret.add(line2);
         return ret;
     }

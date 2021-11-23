@@ -7,7 +7,7 @@ import lombok.Data;
 public class MockerDeconstruction extends Deconstruction{
     //    String className = list.get(0);
 //    String valName = list.get(1);
-//    String line1 = className + " " + valName + " = " + "new ArrayList<>();";
+//    String line1 = className + StringConstants.SPACE + valName + " = " + "new ArrayList<>();";
 //    String innerClassName = className.substring(className.indexOf("<") + 1, className.indexOf(">"));
 //    String innerValName = CaseFormat.LOWER_CAMEL.to(LOWER_CAMEL, innerClassName);
 //    String line2 = mockNormal(ListUtils.of(innerClassName, innerValName));
