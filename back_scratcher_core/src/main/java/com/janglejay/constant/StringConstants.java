@@ -9,13 +9,13 @@ public class StringConstants {
 
     public static final String WITH_COMMENTS = "y";
 
-    public static final String NO_WITH_COMMENTS = "n";
+    public static final String WITHOUT_COMMENTS = "n";
 
     public static final String EXIT = "exit";
 
     public static final String CONMMENT_SYMBOL = "//";
 
-    public static final String SPACE = StringConstants.SPACE;
+    public static final String SPACE = " ";
 
     public static final String EMPTY = "";
 
@@ -25,7 +25,7 @@ public class StringConstants {
 
     public static final String TABLE = "\t";
 
-    public static final String COMMA = StringConstants.COMMA;
+    public static final String COMMA = ",";
 
 
 }
