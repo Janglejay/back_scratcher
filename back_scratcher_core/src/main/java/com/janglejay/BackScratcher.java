@@ -44,6 +44,9 @@ public class BackScratcher {
                                 isRun = false;
                                 break;
                             }
+
+                            if (checkOption(line)) break;
+
                             DoProcess.doOneLine(data, withComments, line);
                             line = getLine();
                         } catch (Exception e) {
@@ -58,6 +61,9 @@ public class BackScratcher {
                     if (StringUtils.equalsIgnoreCase(line, StringConstants.EXIT)) {
                         break;
                     }
+
+                    if (checkOption(line)) continue;
+
                     //oneLine 单行读入
                     DoProcess.doOneLine(data, withComments, line);
                 }
@@ -75,7 +81,7 @@ public class BackScratcher {
         out.close();
     }
 
-    // 排除空行，切换模式，如果是切换模式操作则重新读入一行
+    // 排除空行，切换模式，如果是切换模式操作
     private static String getLine() {
         String line = in.nextCodeLine();
         while (StringUtils.isBlank(line)) line = in.nextCodeLine();
@@ -83,10 +89,9 @@ public class BackScratcher {
         if (checkOption(line)) {
             changeInputModel(line);
             changeOutputModel(line);
-            line = in.nextCodeLine();
+            log.info("模式切换完成");
         }
 
-        while (StringUtils.isBlank(line)) line = in.nextCodeLine();
 
         return line;
     }
@@ -100,7 +105,7 @@ public class BackScratcher {
     // 切换输入模式
     private static boolean changeInputModel(String line) {
         if (StringUtils.equalsAnyIgnoreCase(line, StringConstants.MULTI_INPUT, StringConstants.ONELINE_INPUT)) {
-            isMultiInput = StringUtils.equalsIgnoreCase(line, StringConstants.MULTI_INPUT_END);
+            isMultiInput = StringUtils.equalsIgnoreCase(line, StringConstants.MULTI_INPUT);
         }
         return isMultiInput;
     }
