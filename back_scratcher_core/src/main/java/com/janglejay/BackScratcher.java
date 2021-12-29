@@ -45,6 +45,7 @@ public class BackScratcher {
                                 break;
                             }
 
+                            //切换模式后刷新数据
                             if (checkOption(line)) break;
 
                             DoProcess.doOneLine(data, withComments, line);
@@ -62,6 +63,7 @@ public class BackScratcher {
                         break;
                     }
 
+                    //切换模式后刷新数据
                     if (checkOption(line)) continue;
 
                     //oneLine 单行读入
@@ -81,7 +83,7 @@ public class BackScratcher {
         out.close();
     }
 
-    // 排除空行，切换模式，如果是切换模式操作
+    // 排除空行，切换模式
     private static String getLine() {
         String line = in.nextCodeLine();
         while (StringUtils.isBlank(line)) line = in.nextCodeLine();
