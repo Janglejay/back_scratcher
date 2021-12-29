@@ -1,5 +1,6 @@
 package com.janglejay.resolver.impl;
 
+import com.janglejay.constant.StringConstants;
 import com.janglejay.deconstruction.DoReturnDeconstruction;
 import com.janglejay.enums.ReturnValueTypeEnum;
 import com.janglejay.resolver.Resolver;
@@ -35,7 +36,7 @@ public class DoReturnResolver implements Resolver {
 //        doReturn("dx").when(CookieUtils.class, "getCookieValue", any(), any());
             left = sides[0].trim();
             right = sides[1].trim();
-            List<String> list = Arrays.stream(left.split(" ")).filter(
+            List<String> list = Arrays.stream(left.split(StringConstants.SPACE)).filter(
                     x -> !x.trim().equals("")
             ).collect(Collectors.toList());
 

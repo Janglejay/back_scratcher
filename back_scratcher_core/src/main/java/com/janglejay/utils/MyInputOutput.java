@@ -1,5 +1,7 @@
 package com.janglejay.utils;
 
+import com.janglejay.constant.StringConstants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,7 +29,7 @@ public class MyInputOutput {
 
         private void printArrayJoinSpace(int[] arr, int start, int end) {
             for (int i = start; i < end; i++) {
-                out.println(arr[i] + " ");
+                out.println(arr[i] + StringConstants.SPACE);
             }
         }
 
@@ -39,7 +41,7 @@ public class MyInputOutput {
 
         private void printArrayJoinSpace(int[] arr) {
             for (int i : arr) {
-                out.print(i + " ");
+                out.print(i + StringConstants.SPACE);
             }
         }
 
@@ -84,6 +86,15 @@ public class MyInputOutput {
                 e.printStackTrace();
             }
             return str;
+        }
+
+        public String nextCodeLine() {
+            String line = in.nextLine();
+            line = line.trim();
+            if (line.startsWith("//")) {
+                line = line.substring(2).trim();
+            }
+            return line;
         }
 
         public void nextIntegerArray(int[] arr, int start, int end) {

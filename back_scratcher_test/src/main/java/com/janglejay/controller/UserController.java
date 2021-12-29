@@ -1,8 +1,8 @@
 package com.janglejay.controller;
 
+import com.google.common.collect.Lists;
 import com.janglejay.entity.User;
 import com.janglejay.service.UserService;
-import com.janglejay.utils.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +29,6 @@ public class UserController {
             List<User> users = userService.queryAllUser();
             return users;
         }
-        return ListUtil.of();
+        return Lists.newArrayList();
     }
 }
