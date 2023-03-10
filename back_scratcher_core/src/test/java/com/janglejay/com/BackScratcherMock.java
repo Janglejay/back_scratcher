@@ -1,5 +1,6 @@
 package com.janglejay.com;
 
+import com.janglejay.deconstruction.Deconstruction;
 import com.janglejay.deconstruction.MockerDeconstruction;
 import com.janglejay.handler.MockerHandler;
 import com.janglejay.resolver.impl.MockerResolver;

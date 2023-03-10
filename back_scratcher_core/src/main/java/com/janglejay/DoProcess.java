@@ -7,8 +7,6 @@ import com.janglejay.resolver.impl.MixedResolver;
 
 import java.util.List;
 
-import static com.janglejay.utils.MyInputOutput.out;
-
 public class DoProcess {
 
     public static void doOneLine(StringBuilder data, boolean withComments, String line) throws Exception {
@@ -17,7 +15,7 @@ public class DoProcess {
         ret = MixedHandler.handle(mixedDeconstruction);
         if (ret != null) {
             if (withComments)
-                data.append(StringConstants.CONMMENT_SYMBOL + StringConstants.TABLE + line + StringConstants.LF);
+                data.append(StringConstants.COMMENT_SYMBOL + StringConstants.TABLE + line + StringConstants.LF);
             for (String s : ret) {
                 data.append(s + StringConstants.LF);
             }

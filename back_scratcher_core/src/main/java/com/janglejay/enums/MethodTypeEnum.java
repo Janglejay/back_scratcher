@@ -1,8 +1,17 @@
 package com.janglejay.enums;
 
 public enum MethodTypeEnum {
+    /**
+     * 普通类型
+     */
     NORMAL(0),
+    /**
+     * 静态方法
+     */
     STATIC(1),
+    /**
+     * 私有方法
+     */
     PRIVATE(2);
     private int type;
     MethodTypeEnum(int type) {

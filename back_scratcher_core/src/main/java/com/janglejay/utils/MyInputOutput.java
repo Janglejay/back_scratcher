@@ -2,16 +2,22 @@ package com.janglejay.utils;
 
 import com.janglejay.constant.StringConstants;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class MyInputOutput {
     public static final MyScanner in = new MyScanner();
     private static final MyWriter myOut = new MyWriter();
     public static final PrintWriter out = myOut.out;
+    public static PrintWriter fileOut;
+
+    static {
+        try {
+            fileOut = new PrintWriter("/opt/logs/com.jangejay.back_scratcher/result.log");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static class MyWriter {
 

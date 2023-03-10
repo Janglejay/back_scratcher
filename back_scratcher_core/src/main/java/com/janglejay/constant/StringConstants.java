@@ -5,7 +5,7 @@ public class StringConstants {
 
     public static final String MULTI_INPUT = "m";
 
-    public static final String ONELINE_INPUT = "o";
+    public static final String ONE_LINE_INPUT = "o";
 
     public static final String WITH_COMMENTS = "y";
 
@@ -13,7 +13,7 @@ public class StringConstants {
 
     public static final String EXIT = "exit";
 
-    public static final String CONMMENT_SYMBOL = "//";
+    public static final String COMMENT_SYMBOL = "//";
 
     public static final String SPACE = " ";
 

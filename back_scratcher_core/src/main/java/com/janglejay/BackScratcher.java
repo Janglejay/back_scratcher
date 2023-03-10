@@ -10,8 +10,7 @@ import java.awt.datatransfer.StringSelection;
 
 import static com.janglejay.utils.ImageUtil.GOOD_BYE;
 import static com.janglejay.utils.ImageUtil.LOGO;
-import static com.janglejay.utils.MyInputOutput.in;
-import static com.janglejay.utils.MyInputOutput.out;
+import static com.janglejay.utils.MyInputOutput.*;
 
 @Slf4j
 public class BackScratcher {
@@ -22,6 +21,8 @@ public class BackScratcher {
         log.info("START BACK SCRATCHER");
         out.println(LOGO);
         out.flush();
+        fileOut.println(LOGO);
+        fileOut.flush();
 
         if (args.length > NumberUtils.INTEGER_ZERO)
             withComments = StringUtils.equalsIgnoreCase(args[0], StringConstants.WITH_COMMENTS);
@@ -53,7 +54,7 @@ public class BackScratcher {
                         } catch (Exception e) {
                             log.error("{}", e);
                             //抛出异常时不打印生成结果而是打印原来语句
-                            data.append(StringConstants.CONMMENT_SYMBOL + StringConstants.TABLE + line + StringConstants.LF);
+                            data.append(StringConstants.COMMENT_SYMBOL + StringConstants.TABLE + line + StringConstants.LF);
                             line = getLine();
                             continue;
                         }
@@ -70,6 +71,7 @@ public class BackScratcher {
                     DoProcess.doOneLine(data, withComments, line);
                 }
                 out.println(data);
+                fileOut.println(data);
                 StringSelection stringSelection = new StringSelection(data.toString());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             } catch (Exception e) {
@@ -77,10 +79,14 @@ public class BackScratcher {
                 continue;
             }
             out.flush();
+            fileOut.flush();
         }
         out.println(GOOD_BYE);
+        fileOut.println(GOOD_BYE);
         out.flush();
         out.close();
+        fileOut.flush();
+        fileOut.close();
     }
 
     // 排除空行，切换模式
@@ -100,13 +106,13 @@ public class BackScratcher {
 
     // 判断是否是切换模式操作
     private static boolean checkOption(String line) {
-        return StringUtils.equalsAnyIgnoreCase(line, StringConstants.MULTI_INPUT, StringConstants.ONELINE_INPUT, StringConstants.WITH_COMMENTS, StringConstants.WITHOUT_COMMENTS);
+        return StringUtils.equalsAnyIgnoreCase(line, StringConstants.MULTI_INPUT, StringConstants.ONE_LINE_INPUT, StringConstants.WITH_COMMENTS, StringConstants.WITHOUT_COMMENTS);
     }
 
 
     // 切换输入模式
     private static boolean changeInputModel(String line) {
-        if (StringUtils.equalsAnyIgnoreCase(line, StringConstants.MULTI_INPUT, StringConstants.ONELINE_INPUT)) {
+        if (StringUtils.equalsAnyIgnoreCase(line, StringConstants.MULTI_INPUT, StringConstants.ONE_LINE_INPUT)) {
             isMultiInput = StringUtils.equalsIgnoreCase(line, StringConstants.MULTI_INPUT);
         }
         return isMultiInput;
